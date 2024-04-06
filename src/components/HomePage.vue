@@ -3,7 +3,8 @@
         <h2>Welcome to BookBridges</h2>
         <form>
             <div>
-                <a href="">Writer's Functions Demo</a>
+                <!-- <a href="">Writer's Functions Demo</a> -->
+                <router-link to="/writer">Writer's / Reader's Functions Demo</router-link>
             </div>
             <div>
                 <a href="">Reader's Functions Demo</a>                
