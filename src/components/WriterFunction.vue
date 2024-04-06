@@ -1,20 +1,21 @@
 <template>
-    <div>
+    <div class="container">
         <h1>Writer's Functions Demo</h1>
 
         <!-- Create a new article -->
         <h3>Create A New Article</h3>
         <form @submit.prevent="uploadArticle">
-            <div>
-                <label>Title:</label>
-                <input type="text" v-model="newTitle" name="newTitle">
+            <div class="mb-3">                
+                <!-- <label for="newTitle" class="form-label">Title:</label> -->
+                <input type="text" v-model="newTitle" id="newTitle" name="newTitle" class="form-control" placeholder="Title">                
+            </div>
+            <div class="mb-3">                
+                <!-- <label for="newContent">Content:</label> -->
+                <textarea v-model="newContent" id="newContent" name="newContent" rows="5" class="form-control" placeholder="Content"></textarea>
+                
             </div>
             <div>
-                <label>Content:</label>
-                <textarea v-model="newContent" name="newContent" rows="5" cols="100"></textarea>
-            </div>
-            <div>
-                <button type="submit">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
         <p v-if="uploadMessage" class="error-message">{{ uploadMessage }}</p>    
@@ -24,11 +25,11 @@
 
         <!-- Display all articles in a table -->
         <h3>List All Articles</h3>
-        <button @click="getAllArticles()">Reload All Articles</button>
+        <!-- <button @click="getAllArticles()" class="btn btn-primary">Reload All Articles</button> -->
         <p></p>
         <p v-if="readMessage" class="error-message">{{ readMessage }}</p>
-        <div class="table-container"> 
-            <table class="bordered-table">
+        <div class="mb-3"> 
+            <table class="table table-striped table-hover">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -42,8 +43,8 @@
                         <td>{{ article.title }}</td>
                         <!-- Display only the first 20 characters of article.content -->
                         <td>{{ article.content.substring(0, 50) + (article.content.length > 50 ? '...' : '') }}</td>
-                        <td><button @click="loadArticle(article)">View Details / Update</button></td>
-                        <td><button @click="deleteArticle(article.articleId)">Delete</button></td>
+                        <td><button @click="loadArticle(article)" class="btn btn-success">View Details / Update</button></td>
+                        <td><button @click="deleteArticle(article.articleId)" class="btn btn-danger">Delete</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -55,16 +56,16 @@
         <p></p>
         <h3>View / Update An Article</h3>
         <form @submit.prevent="updateArticle(articleId)">
-            <div>
-                <label>Title:</label>
-                <input type="text" v-model="title" name="title">
+            <div class="mb-3">
+                <!-- <label>Title:</label> -->
+                <input type="text" v-model="title" id="title" name="title" class="form-control" placeholder="Title">
+            </div>
+            <div class="mb-3">
+                <!-- <label>Content:</label> -->
+                <textarea v-model="content" id="content" name="content" rows="5" class="form-control" placeholder="Content"></textarea>
             </div>
             <div>
-                <label>Content:</label>
-                <textarea v-model="content" name="content" rows="5" cols="100"></textarea>
-            </div>
-            <div>
-                <button type="submit">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>    
         <p v-if="updateMessage" class="error-message">{{ updateMessage }}</p>
@@ -194,27 +195,9 @@ export default {
 </script>
 
 <style scoped>
-.table-container {
-    display: flex;
-    justify-content: center;
-}
 
-.bordered-table {
-    border-collapse: collapse;
-}
-
-.bordered-table th, .bordered-table td {
-    border: 1px solid #ddd; /* Change the color as needed */
-    padding: 8px;
-    text-align: left;
-}
-
-.bordered-table th {
-    background-color: #f2f2f2; /* Change the background color as needed */
-}
 
 .error-message {
     color: red;
 }
-
 </style>
