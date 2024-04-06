@@ -6,11 +6,11 @@
         <h3>Create A New Article</h3>
         <form @submit.prevent="uploadArticle">
             <div>
-                <label>Title:</label><br>
+                <label>Title:</label>
                 <input type="text" v-model="newTitle" name="newTitle">
             </div>
             <div>
-                <label>Content:</label><br>
+                <label>Content:</label>
                 <textarea v-model="newContent" name="newContent" rows="5" cols="100"></textarea>
             </div>
             <div>
@@ -18,6 +18,9 @@
             </div>
         </form>
         <p v-if="uploadMessage" class="error-message">{{ uploadMessage }}</p>    
+
+        <p></p>
+        <p></p>
 
         <!-- Display all articles in a table -->
         <h3>List All Articles</h3>
@@ -48,15 +51,16 @@
         </div>
         <p v-if="deleteMessage" class="error-message">{{ deleteMessage }}</p>
 
-
+        <p></p>
+        <p></p>
         <h3>View / Update An Article</h3>
         <form @submit.prevent="updateArticle(articleId)">
             <div>
-                <label>Title:</label><br>
+                <label>Title:</label>
                 <input type="text" v-model="title" name="title">
             </div>
             <div>
-                <label>Article:</label><br>
+                <label>Content:</label>
                 <textarea v-model="content" name="content" rows="5" cols="100"></textarea>
             </div>
             <div>
