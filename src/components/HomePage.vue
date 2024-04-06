@@ -4,7 +4,7 @@
         <form>
             <div>
                 <!-- <a href="">Writer's Functions Demo</a> -->
-                <router-link to="/writer">Writer's / Reader's Functions Demo</router-link>
+                <router-link to="/writer">Writer's Functions Demo</router-link>
             </div>
             <div>
                 <a href="">Reader's Functions Demo</a>                
