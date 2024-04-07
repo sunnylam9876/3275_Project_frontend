@@ -7,6 +7,7 @@
         <p></p>
 
         <h3><router-link to="/createarticle">Create A New Article</router-link></h3>
+        <h3><router-link to="/">Back to The Main Menu</router-link></h3>
         <!-- Display all articles in a table -->
         <h3>All Articles</h3>
         <!-- <button @click="getAllArticles()" class="btn btn-primary">Reload All Articles</button> -->
