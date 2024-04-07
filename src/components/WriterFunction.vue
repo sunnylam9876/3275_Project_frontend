@@ -2,29 +2,13 @@
     <div class="container">
         <h1>Writer's Functions Demo</h1>
 
+        <p></p>
         <!-- Create a new article -->
-        <h3>Create A New Article</h3>
-        <form @submit.prevent="uploadArticle">
-            <div class="mb-3">                
-                <!-- <label for="newTitle" class="form-label">Title:</label> -->
-                <input type="text" v-model="newTitle" id="newTitle" name="newTitle" class="form-control" placeholder="Title">                
-            </div>
-            <div class="mb-3">                
-                <!-- <label for="newContent">Content:</label> -->
-                <textarea v-model="newContent" id="newContent" name="newContent" rows="5" class="form-control" placeholder="Content"></textarea>
-                
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>
-        <p v-if="uploadMessage" class="error-message">{{ uploadMessage }}</p>    
-
-        <p></p>
         <p></p>
 
+        <h3><router-link to="/createarticle">Create A New Article</router-link></h3>
         <!-- Display all articles in a table -->
-        <h3>List All Articles</h3>
+        <h3>All Articles</h3>
         <!-- <button @click="getAllArticles()" class="btn btn-primary">Reload All Articles</button> -->
         <p></p>
         <p v-if="readMessage" class="error-message">{{ readMessage }}</p>
@@ -52,30 +36,35 @@
         </div>
         <p v-if="deleteMessage" class="error-message">{{ deleteMessage }}</p>
 
-        <p></p>
-        <p></p>
-        <h3>View / Update An Article</h3>
-        <form @submit.prevent="updateArticle(articleId)">
-            <div class="mb-3">
-                <!-- <label>Title:</label> -->
-                <input type="text" v-model="title" id="title" name="title" class="form-control" placeholder="Title">
-            </div>
-            <div class="mb-3">
-                <!-- <label>Content:</label> -->
-                <textarea v-model="content" id="content" name="content" rows="5" class="form-control" placeholder="Content"></textarea>
-            </div>
-            <div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </form>    
-        <p v-if="updateMessage" class="error-message">{{ updateMessage }}</p>
+        <!-- View / Update An Article -->
+        <div v-if="showUpdateForm">
+            <h3>View / Update An Article</h3>
+            <form @submit.prevent="updateArticle(articleId)">
+                <div class="mb-3">
+                    <!-- <label>Title:</label> -->
+                    <input type="text" v-model="title" id="title" name="title" class="form-control" placeholder="Title">
+                </div>
+                <div class="mb-3">
+                    <!-- <label>Content:</label> -->
+                    <textarea v-model="content" id="content" name="content" rows="5" class="form-control" placeholder="Content"></textarea>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>    
+            <p v-if="updateMessage" class="error-message">{{ updateMessage }}</p>
+        </div>
+
+        
+       
+        
     </div>
 </template>
 
 <script>
 import ArticleService from "../services/ArticleService";
 export default {
-  name: 'ArticleFunction',
+  name: 'WriterFunction',
   data() {
     return {
         // Variable for a new article
@@ -88,11 +77,10 @@ export default {
         title: "",
         content: "",
         articleId: null,
-        readMessage: "",
+        readMessage: "",    // feedback message after fetching articles from server
         updateMessage: "",  // feedback message after updating an article
-        deleteMessage:""   // feedback message after deleting an article 
-
-        
+        deleteMessage:"",   // feedback message after deleting an article         
+        showUpdateForm: false,  // Boolean to control visibility of the update article form               
     };
   },
 
@@ -134,6 +122,13 @@ export default {
     },
 
     deleteArticle(articleId) {
+        // Prompt the user for confirmation
+        const confirmDelete = window.confirm("Are you sure to delete this article?");
+        if (!confirmDelete) {
+            return; // User canceled the deletion
+        }
+
+        // Proceed with article deletion
         ArticleService.deleteArticle(articleId)
             .then(() => {
                 // Remove deleted article from articles array
@@ -152,10 +147,15 @@ export default {
     },
 
     loadArticle(article) {
+        
+        this.showUpdateForm = true; // Show the update form
+        
+
         // Set the title and article content for updating
         this.title = article.title;
         this.content = article.content;
         this.articleId = article.articleId;
+        
     },
 
     updateArticle(articleId) {
@@ -184,8 +184,14 @@ export default {
         this.readMessage = "";
         this.updateMessage = "";
         this.deleteMessage = "";
-    }
-  },
+    },
+
+    toggleNewArticleForm() {
+        // Hide the update form when creating a new article
+        this.showUpdateForm = false;       
+        
+    },
+  },  
 
   mounted() {
     // Call getAllArticles method when the component is mounted to fetch articles
@@ -201,3 +207,4 @@ export default {
     color: red;
 }
 </style>
+
