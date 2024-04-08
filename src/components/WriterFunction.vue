@@ -139,7 +139,7 @@ export default {
         ArticleService.getArticlesbyUserId(userId)
             .then(response => {
                 this.articles = response.data;
-                console.log(response);
+                //console.log(response);
             })
             .catch(error => {
                 this.readMessage = "Error fetching article: " + error;

@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import UserLogin from "../components/UserLogin.vue";
+import UserLogout from "../components/UserLogout.vue";
 import UserRegister from "../components/UserRegister.vue";
 import HomePage from "../components/HomePage.vue";
 import WriterFunction from "../components/WriterFunction.vue";
@@ -17,6 +18,12 @@ const routes = [
         path: "/register",        
         name: "register",
         component: UserRegister
+    },
+
+    {
+        path: "/logout",        
+        name: "logout",
+        component: UserLogout
     },
 
     {
