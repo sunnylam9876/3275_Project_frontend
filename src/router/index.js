@@ -3,7 +3,7 @@ import UserLogin from "../components/UserLogin.vue";
 import UserLogout from "../components/UserLogout.vue";
 import UserRegister from "../components/UserRegister.vue";
 import HomePage from "../components/HomePage.vue";
-import WriterFunction from "../components/WriterFunction.vue";
+import WriterPage from "../components/WriterPage.vue";
 import CreateArticle from "../components/CreateArticle.vue";
 
 const routes = [
@@ -35,7 +35,7 @@ const routes = [
     {
         path: "/writer",        
         name: "writer",
-        component: WriterFunction
+        component: WriterPage
     },
 
     {
