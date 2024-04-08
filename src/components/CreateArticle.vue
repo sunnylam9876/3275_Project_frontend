@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         
-            <!-- <h3>Create A New Article</h3> -->
+            <h3>Create A New Article</h3>
             <form @submit.prevent="uploadArticle">
                 <div class="mb-3">                
                     <!-- <label for="newTitle" class="form-label">Title:</label> -->
@@ -9,7 +9,7 @@
                 </div>
                 <div class="mb-3">                
                     <!-- <label for="newContent">Content:</label> -->
-                    <textarea v-model="newContent" id="newContent" name="newContent" rows="5" class="form-control" placeholder="Content"></textarea>                    
+                    <textarea v-model="newContent" id="newContent" name="newContent" rows="15" class="form-control" placeholder="Content"></textarea>                    
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary">Create</button>
@@ -51,7 +51,11 @@ export default {
                 // Handle success response
                 //console.log("Article created successfully:", response.data);
                 this.clearAllMessage();
-                this.uploadMessage = "Article created successfully.";
+                //this.uploadMessage = "Article created successfully.";
+                window.alert("Article created successfully.");
+
+                // Redirect if article is created successfully
+                this.$router.push("/writer");
                 
             })
             .catch(error => {
