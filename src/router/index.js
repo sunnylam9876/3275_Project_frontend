@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
-//import UserLogin from "../components/UserLogin.vue";
+import UserLogin from "../components/UserLogin.vue";
+import UserRegister from "../components/UserRegister.vue";
 import HomePage from "../components/HomePage.vue";
 import WriterFunction from "../components/WriterFunction.vue";
 import CreateArticle from "../components/CreateArticle.vue";
@@ -7,8 +8,20 @@ import CreateArticle from "../components/CreateArticle.vue";
 const routes = [
     {
         path: "/",
-        alias: "/home",
-        name: "homePage",
+        alias: "/login",
+        name: "userlogin",
+        component: UserLogin
+    },
+
+    {
+        path: "/register",        
+        name: "register",
+        component: UserRegister
+    },
+
+    {
+        path: "/home",        
+        name: "homepage",
         component: HomePage
     },
 
