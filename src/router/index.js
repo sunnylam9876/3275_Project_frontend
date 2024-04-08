@@ -4,6 +4,8 @@ import UserLogout from "../components/UserLogout.vue";
 import UserRegister from "../components/UserRegister.vue";
 import HomePage from "../components/HomePage.vue";
 import WriterPage from "../components/WriterPage.vue";
+import ReaderPage from "../components/ReaderPage.vue";
+import AdminPage from "../components/AdminPage.vue";
 import CreateArticle from "../components/CreateArticle.vue";
 
 const routes = [
@@ -43,6 +45,19 @@ const routes = [
         name: "createarticle",
         component: CreateArticle
     },
+
+    {
+        path: "/reader",        
+        name: "reader",
+        component: ReaderPage
+    },
+
+    {
+        path: "/admin",        
+        name: "admin",
+        component: AdminPage
+    },
+
 
 ];
 
