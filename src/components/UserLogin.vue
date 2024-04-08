@@ -73,6 +73,16 @@
                     if (user.role == "writer"){
                         this.$router.push("/writer");
                     }
+
+                    // Redirect to the "/reader" route
+                    if (user.role == "reader"){
+                        this.$router.push("/reader");
+                    }
+
+                    // Redirect to the "/admin" route
+                    if (user.role == "admin"){
+                        this.$router.push("/admin");
+                    }
                     
                     
                 })

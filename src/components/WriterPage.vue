@@ -1,15 +1,11 @@
 <template>
     <div class="container">
-        <h1>Writer's Functions Demo</h1>
+        <!-- Insert a Navbar on the top of webpage -->
+        <ApplyNavbar :userName="userName" :userRole="userRole" />
 
         <p></p>
-        <!-- Create a new article -->
-        <p></p>
-
-        <h3><router-link to="/createarticle">Create A New Article</router-link></h3>
-        <h3><router-link to="/">Back to The Main Menu</router-link></h3>
-        <!-- Display all articles in a table -->
-        <h3>All Articles</h3>
+        <h3><router-link to="/createarticle">Create A New Article</router-link></h3>       
+        
         <!-- <button @click="getAllArticles()" class="btn btn-primary">Reload All Articles</button> -->
         <p></p>
         <p v-if="readMessage" class="error-message">{{ readMessage }}</p>
@@ -54,20 +50,29 @@
                 </div>
             </form>    
             <p v-if="updateMessage" class="error-message">{{ updateMessage }}</p>
-        </div>
-
-        
+        </div>       
        
         
     </div>
 </template>
 
 <script>
+
+import ApplyNavbar from '@/components/ApplyNavbar.vue';
 import ArticleService from "../services/ArticleService";
 export default {
-  name: 'WriterFunction',
+  name: 'WriterPage',
+  components: {
+    ApplyNavbar  // Register the Navbar component
+  },
+
   data() {
     return {
+        // Variable for user info from localStorage
+        userId: 0,
+        userName: "",
+        userRole: "",
+
         // Variable for a new article
         newTitle:"",
         newContent: "",
@@ -86,6 +91,14 @@ export default {
   },
 
   methods: {
+    readLocalStorageItem() {
+        this.userId = localStorage.getItem("userId");
+        this.userName = localStorage.getItem("userName");
+        this.userRole = localStorage.getItem("role");
+        console.log(this.userName);
+        console.log(this.useRolef);
+    },
+
     uploadArticle() {
         // Check if title and content are empty
         if (!this.newTitle.trim() || !this.newContent.trim()) {
@@ -122,6 +135,17 @@ export default {
             });
     },
 
+    getArticlesbyUserId(userId) {
+        ArticleService.getArticlesbyUserId(userId)
+            .then(response => {
+                this.articles = response.data;
+                //console.log(response);
+            })
+            .catch(error => {
+                this.readMessage = "Error fetching article: " + error;
+            })
+    },
+
     deleteArticle(articleId) {
         // Prompt the user for confirmation
         const confirmDelete = window.confirm("Are you sure to delete this article?");
@@ -137,7 +161,7 @@ export default {
                     //console.log("Article deleted successfully:", response.data);
                     this.clearAllMessage();
                     this.deleteMessage = "Article deleted successfully.";
-                    this.getAllArticles();
+                    this.getArticlesbyUserId(localStorage.getItem("userId"));
             })
             .catch(error => {
                 // Handle error
@@ -196,7 +220,9 @@ export default {
 
   mounted() {
     // Call getAllArticles method when the component is mounted to fetch articles
-    this.getAllArticles();
+    //this.getAllArticles();
+    this.getArticlesbyUserId(localStorage.getItem("userId"));
+    this.readLocalStorageItem();
   }
 }
 </script>

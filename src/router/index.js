@@ -1,8 +1,11 @@
 import { createWebHistory, createRouter } from "vue-router";
 import UserLogin from "../components/UserLogin.vue";
+import UserLogout from "../components/UserLogout.vue";
 import UserRegister from "../components/UserRegister.vue";
 import HomePage from "../components/HomePage.vue";
-import WriterFunction from "../components/WriterFunction.vue";
+import WriterPage from "../components/WriterPage.vue";
+import ReaderPage from "../components/ReaderPage.vue";
+import AdminPage from "../components/AdminPage.vue";
 import CreateArticle from "../components/CreateArticle.vue";
 
 const routes = [
@@ -20,6 +23,12 @@ const routes = [
     },
 
     {
+        path: "/logout",        
+        name: "logout",
+        component: UserLogout
+    },
+
+    {
         path: "/home",        
         name: "homepage",
         component: HomePage
@@ -28,7 +37,7 @@ const routes = [
     {
         path: "/writer",        
         name: "writer",
-        component: WriterFunction
+        component: WriterPage
     },
 
     {
@@ -36,6 +45,19 @@ const routes = [
         name: "createarticle",
         component: CreateArticle
     },
+
+    {
+        path: "/reader",        
+        name: "reader",
+        component: ReaderPage
+    },
+
+    {
+        path: "/admin",        
+        name: "admin",
+        component: AdminPage
+    },
+
 
 ];
 
