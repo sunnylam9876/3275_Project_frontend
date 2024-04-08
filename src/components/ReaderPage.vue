@@ -32,8 +32,6 @@ export default {
             this.userId = localStorage.getItem("userId");
             this.userName = localStorage.getItem("userName");
             this.userRole = localStorage.getItem("role");
-            console.log(this.userName);
-            console.log(this.useRolef);
         },
     },
 
