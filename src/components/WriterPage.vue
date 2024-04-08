@@ -61,7 +61,7 @@
 import ApplyNavbar from '@/components/ApplyNavbar.vue';
 import ArticleService from "../services/ArticleService";
 export default {
-  name: 'WriterFunction',
+  name: 'WriterPage',
   components: {
     ApplyNavbar  // Register the Navbar component
   },
@@ -161,7 +161,7 @@ export default {
                     //console.log("Article deleted successfully:", response.data);
                     this.clearAllMessage();
                     this.deleteMessage = "Article deleted successfully.";
-                    this.getAllArticles();
+                    this.getArticlesbyUserId(localStorage.getItem("userId"));
             })
             .catch(error => {
                 // Handle error
@@ -221,7 +221,7 @@ export default {
   mounted() {
     // Call getAllArticles method when the component is mounted to fetch articles
     //this.getAllArticles();
-    this.getArticlesbyUserId(localStorage.getItem("userId"))
+    this.getArticlesbyUserId(localStorage.getItem("userId"));
     this.readLocalStorageItem();
   }
 }
