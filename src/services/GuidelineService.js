@@ -11,7 +11,6 @@ class GuidelineService {
         // Send a POST request
         return http.post('/guidelines', data);
     }
-
     getAllGuidelines() {
         // Send a GET request to API
         return http.get('/guidelines');
