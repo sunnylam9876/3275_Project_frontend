@@ -13,8 +13,7 @@
                 <h3><a href="">Administrator's Functions Demo</a></h3>
             </div>
             
-        </form>
-            
+        </form>           
 
     </div>
 </template>

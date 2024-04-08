@@ -2,7 +2,7 @@ import http from "../http-common.js";
 
 class ArticleService {
     uploadArticle(title, content, userId) { 
-        //JSON body
+        // Create a JSON body
         const data = {
             title: title,
             content: content,
@@ -24,7 +24,7 @@ class ArticleService {
     }
 
     updateArticle(title, content, userId, articleId) {
-        // JSON body
+        // Create a JSON body
         const data = {
             title: title,
             content: content,

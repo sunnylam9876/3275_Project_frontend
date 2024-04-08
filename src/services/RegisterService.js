@@ -1,20 +1,23 @@
 import http from "../http-common.js";
 
-class LoginService {
+class RegisterService {
 
-    login(userName, password) { 
+    register(userName, password, role, status) { 
         // Create a JSON body
         const data = {
             username: userName,
-            password: password            
+            password: password,
+            role: role,
+            status: status
         };
 
         //console.log(data.username);
         //console.log(data.password);
 
         // Send a POST request
-        return http.post("/users/login", data);
+        return http.post("/users/register", data);
     }
+    
 }
 
-export default new LoginService();
+export default new RegisterService();
