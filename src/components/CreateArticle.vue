@@ -1,4 +1,7 @@
 <template>
+    <!-- Insert a Navbar on the top of webpage -->
+    <ApplyNavbar :userName="userName" :userRole="userRole" />
+
     <div class="container">
         
             <h3>Create A New Article</h3>
@@ -24,11 +27,21 @@
 </template>
 
 <script>
+import ApplyNavbar from '@/components/ApplyNavbar.vue';
 import ArticleService from "../services/ArticleService";
 export default {
   name: 'CreateArticle',
+  components: {
+    ApplyNavbar  // Register the Navbar component
+  },
+
   data() {
     return {
+        // Variable for user info from localStorage
+        userId: 0,
+        userName: "",
+        userRole: "",
+
         // Variable for a new article
         newTitle:"",
         newContent: "",
@@ -37,6 +50,14 @@ export default {
   },
 
   methods: {
+    readLocalStorageItem() {
+        this.userId = localStorage.getItem("userId");
+        this.userName = localStorage.getItem("userName");
+        this.userRole = localStorage.getItem("role");
+        console.log(this.userName);
+        console.log(this.useRolef);
+    },
+
     uploadArticle() {
         // Check if title and content are empty
         if (!this.newTitle.trim() || !this.newContent.trim()) {
@@ -46,7 +67,7 @@ export default {
 
         // Call uploadArticle function from WriterService.js
         // Assume userID is 1
-        ArticleService.uploadArticle(this.newTitle, this.newContent, 1)
+        ArticleService.uploadArticle(this.newTitle, this.newContent, this.userId)
             .then(() => {
                 // Handle success response
                 //console.log("Article created successfully:", response.data);
@@ -74,7 +95,7 @@ export default {
   },  
 
   mounted() {
-    
+    this.readLocalStorageItem();
   }
 }
 </script>

@@ -50,9 +50,7 @@
                 </div>
             </form>    
             <p v-if="updateMessage" class="error-message">{{ updateMessage }}</p>
-        </div>
-
-        
+        </div>       
        
         
     </div>
@@ -137,6 +135,17 @@ export default {
             });
     },
 
+    getArticlesbyUserId(userId) {
+        ArticleService.getArticlesbyUserId(userId)
+            .then(response => {
+                this.articles = response.data;
+                console.log(response);
+            })
+            .catch(error => {
+                this.readMessage = "Error fetching article: " + error;
+            })
+    },
+
     deleteArticle(articleId) {
         // Prompt the user for confirmation
         const confirmDelete = window.confirm("Are you sure to delete this article?");
@@ -211,7 +220,8 @@ export default {
 
   mounted() {
     // Call getAllArticles method when the component is mounted to fetch articles
-    this.getAllArticles();
+    //this.getAllArticles();
+    this.getArticlesbyUserId(localStorage.getItem("userId"))
     this.readLocalStorageItem();
   }
 }

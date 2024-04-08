@@ -18,6 +18,11 @@ class ArticleService {
         return http.get('/articles');
     }
 
+    getArticlesbyUserId(userId) {
+        //console.log(userId);
+        return http.get(`/articles/user/${userId}`);
+    }
+
     deleteArticle(articleId) {
         // Send a DELETE request to API
         return http.delete(`/articles/${articleId}`);
