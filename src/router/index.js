@@ -7,6 +7,8 @@ import WriterPage from "../components/WriterPage.vue";
 import ReaderPage from "../components/ReaderPage.vue";
 import AdminPage from "../components/AdminPage.vue";
 import CreateArticle from "../components/CreateArticle.vue";
+import BrowseAllArticle from "../components/BrowseAllArticle.vue";
+import ViewArticle from '../components/ViewArticle.vue';
 
 const routes = [
     {
@@ -57,6 +59,18 @@ const routes = [
         name: "admin",
         component: AdminPage
     },
+    
+    {
+        path: '/article',
+        name: 'BrowseAllArticle',
+        component: BrowseAllArticle
+    },
+    
+    {
+        path: '/article/:id',
+        name: 'ViewArticle',
+        component: ViewArticle
+    }
 
 
 ];
