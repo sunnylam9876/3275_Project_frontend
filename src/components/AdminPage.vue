@@ -19,14 +19,13 @@
               </thead>
               <tbody>
                 <tr v-for="guideline in guidelines" :key="guideline.guidelineId">
-                      <!-- Display only the first 20 characters of guideline.content -->
-                      <td>{{ guideline.content.substring(0, 50) + (guideline.content.length > 50 ? '...' : '') }}</td>
-                      <td><button @click="loadGuideline(guideline)" class="btn btn-success">View Details / Update</button></td>
-                      <td><button @click="deleteGuideline(guideline.guidelineId)" class="btn btn-danger">Delete</button></td>
-                  </tr>
+                    <!-- Display only the first 50 characters of guideline.content -->
+                    <td>{{ guideline.content.substring(0, 50) + (guideline.content.length > 50 ? '...' : '') }}</td>
+                    <td><button @click="loadGuideline(guideline)" class="btn btn-success">View / Update</button></td>
+                    <td><button @click="deleteGuideline(guideline.guidelineId)" class="btn btn-danger">Delete</button></td>
+                </tr>  
               </tbody>
           </table>
-            
       </div>
       <p v-if="deleteMessage" class="error-message">{{ deleteMessage }}</p>
 
