@@ -189,6 +189,7 @@ methods: {
 
 mounted() {
   this.readLocalStorageItem();
+  this.getAllGuidelines();
 }
 }
 
