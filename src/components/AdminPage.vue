@@ -18,7 +18,7 @@
                   </tr>
               </thead>
               <tbody>
-                  <tr v-for="guideline in guidelines" :key="guideline.guidelineId">
+                <tr v-for="guideline in guidelines" :key="guideline.guidelineId">
                       <!-- Display only the first 20 characters of guideline.content -->
                       <td>{{ guideline.content.substring(0, 50) + (guideline.content.length > 50 ? '...' : '') }}</td>
                       <td><button @click="loadGuideline(guideline)" class="btn btn-success">View Details / Update</button></td>
@@ -82,32 +82,6 @@ methods: {
     console.log(this.userName);
     console.log(this.useRole);
   },
-
-  /*  
-  uploadGuideline() {
-    // Check if content are empty
-    if (!this.newContent.trim()) {
-      this.uploadMessage = "content cannot be empty.";
-      return; // Stop further execution
-    }
-
-    // Call uploadGuideline function from GuidelineService.js
-    GuidelineService.updateGuideline(this.newContent)
-      .then(() => {
-      // Handle success response
-      //console.log("Guideline created successfully:", response.data);
-      this.clearAllMessage();
-      this.uploadMessage = "Guideline created successfully.";
-      this.getAllGuidelines();
-    })
-    .catch(error => {
-      // Handle error
-      //console.error("Error creating guideline: ", error);
-      this.clearAllMessage();
-      this.uploadMessage = "Error creating guideline: " + error;
-    })
-  },
-  */
 
   getAllGuidelines() {
     GuidelineService.getAllGuidelines()
