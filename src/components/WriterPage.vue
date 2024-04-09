@@ -10,7 +10,7 @@
         <p></p>
         <p v-if="readMessage" class="error-message">{{ readMessage }}</p>
         
-        <!-- Conditionally render the div based on whether articles are present or not -->
+        <!-- Conditionally render the table based on whether articles are present or not -->
         <div v-if="articles.length > 0" class="mb-3"> 
             <table class="table table-striped table-hover">
                 <thead>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="mb-3">
                     <!-- <label>Content:</label> -->
-                    <textarea v-model="content" id="content" name="content" rows="5" class="form-control" placeholder="Content"></textarea>
+                    <textarea v-model="content" id="content" name="content" rows="15" class="form-control" placeholder="Content"></textarea>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary">Update</button>
@@ -169,6 +169,7 @@ export default {
                     this.clearAllMessage();
                     this.deleteMessage = "Article deleted successfully.";
                     this.getArticlesbyUserId(localStorage.getItem("userId"));
+                    this.hideUpdateForm();
             })
             .catch(error => {
                 // Handle error
@@ -218,7 +219,7 @@ export default {
         this.deleteMessage = "";
     },
 
-    toggleNewArticleForm() {
+    hideUpdateForm() {
         // Hide the update form when creating a new article
         this.showUpdateForm = false;       
         
