@@ -7,6 +7,7 @@ import WriterPage from "../components/WriterPage.vue";
 import ReaderPage from "../components/ReaderPage.vue";
 import AdminPage from "../components/AdminPage.vue";
 import CreateArticle from "../components/CreateArticle.vue";
+import CreateGuideline from "../components/CreateGuideline.vue";
 
 const routes = [
     {
@@ -56,6 +57,12 @@ const routes = [
         path: "/admin",        
         name: "admin",
         component: AdminPage
+    },
+
+    {
+        path: "/createguideline",        
+        name: "createguideline",
+        component: CreateGuideline
     },
 
 
