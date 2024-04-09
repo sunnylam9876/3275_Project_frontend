@@ -39,6 +39,10 @@ class ArticleService {
         // Send a PUT request
         return http.put(`/articles/${articleId}`, data);
     }
+
+    updateArticleCount(articleId) {
+        return http.put(`/articles/count/${articleId}`);
+    }
 }
 
 export default new ArticleService();
