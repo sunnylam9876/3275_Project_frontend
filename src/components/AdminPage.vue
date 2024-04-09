@@ -7,6 +7,10 @@
     <p>This is admin's page</p>
     <p>Pending.....</p>
 
+
+
+
+
 </template>
 
 <script>
