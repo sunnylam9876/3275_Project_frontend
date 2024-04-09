@@ -95,8 +95,8 @@ export default {
         this.userId = localStorage.getItem("userId");
         this.userName = localStorage.getItem("userName");
         this.userRole = localStorage.getItem("role");
-        console.log(this.userName);
-        console.log(this.useRolef);
+        //console.log(this.userName);
+        //console.log(this.useRole);
     },
 
     uploadArticle() {
@@ -194,7 +194,7 @@ export default {
                 //console.log("Article updated successfully:", response.data);
                 this.clearAllMessage();
                 this.updateMessage = "Article updated successfully.";
-                this.getAllArticles();
+                this.getArticlesbyUserId(this.userId);
             })
             .catch(error => {
                 //console.error("Error updating article:", error);
