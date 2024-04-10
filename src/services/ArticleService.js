@@ -23,6 +23,10 @@ class ArticleService {
         return http.get(`/articles/user/${userId}`);
     }
 
+    getArticleById(articleId) {
+        return http.get(`/articles/${articleId}`);
+    }
+
     deleteArticle(articleId) {
         // Send a DELETE request to API
         return http.delete(`/articles/${articleId}`);
@@ -38,6 +42,10 @@ class ArticleService {
 
         // Send a PUT request
         return http.put(`/articles/${articleId}`, data);
+    }
+
+    updateArticleCount(articleId) {
+        return http.put(`/articles/count/${articleId}`);
     }
 }
 
