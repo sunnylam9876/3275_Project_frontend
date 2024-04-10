@@ -14,7 +14,7 @@
         <div class="article-content">    
             <div class="article-info">
                 <div class="info-group">
-                    <p><strong>User ID:</strong> <span class="info">{{ article.userId }}</span></p>
+                    <p><strong>Author ID:</strong> <span class="info">{{ article.userId }}</span></p>
                 </div>
                 <div class="info-group">
                     <p><strong>No. of Views:</strong> <span class="info">{{ article.noOfView }}</span></p>
@@ -33,7 +33,7 @@
                 <h2>Comments</h2>
                 <ul>
                     <li v-for="comment in comments" :key="comment.id" class="comment">
-                        <p><strong>User ID:</strong> {{ comment.userId }}</p>
+                        <p><strong>User Name:</strong> {{ comment.userId }}</p>
                         <p><strong>Comments: </strong>{{ comment.content }}</p>                        
                         <p><strong>Created at:</strong> {{ comment.createdTime }}</p>
                     </li>
@@ -42,6 +42,15 @@
             <div v-else>
                 <p>No comments available.</p>
             </div>
+
+            <div>
+                <h2>Leave a Comment</h2>
+                <form @submit.prevent="submitComment">
+                    <textarea v-model="newCommentContent" rows="4" cols="50" placeholder="Enter your comment here please."></textarea>
+                    <button type="submit" class="btn btn-primary">Post Comment</button>
+                </form>
+            </div>
+
         </div>
 
     </div>
@@ -69,8 +78,9 @@ export default {
             userId: 0,
             userName: "",
             userRole: "",
-            article: null, // Store article data
-            comments: []
+            article: null,
+            comments: [],
+            newCommentContent: '' // The content of the new comment
         };
     },
 
@@ -102,6 +112,28 @@ export default {
             .catch(error => {
                 console.error("Error fetching comments data: ", error);
             });
+        },
+
+        submitComment() {
+            if (this.newCommentContent.trim() !== '') {
+                const articleId = this.$route.params.id;
+                const newComment = {
+                    userId: this.userId,
+                    articleId: articleId,
+                    content: this.newCommentContent
+                };
+
+                CommentServices.createComment(newComment)
+                .then(() => {
+                    // clean the input box after posting
+                    this.newCommentContent = '';
+                    // reflect the new added comment to the comments.
+                    this.fetchCommentsData(articleId);
+                })
+                .catch(error => {
+                    console.error("Error posting comment: ", error);
+                });
+            }
         }
     },
     
@@ -111,7 +143,6 @@ export default {
     }
 }
 </script>
-
 
 <style scoped>
 .back-button {
@@ -130,7 +161,7 @@ export default {
 }
 
 .info-group {
-    margin: 0 20px; /* Adjust spacing between info groups */
+    margin: 0 20px;
 }
 
 .info {
@@ -158,5 +189,14 @@ export default {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 15px;
+}
+
+textarea {
+    width: calc(100% - 24px);
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    margin-top: 10px;
 }
 </style>
