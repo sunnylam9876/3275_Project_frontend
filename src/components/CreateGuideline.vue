@@ -6,7 +6,6 @@
         <h3>Create A New Guideline</h3>
         <form @submit.prevent="uploadGuideline">
             <div class="mb-3">                
-                <!-- <label for="newContent">Content:</label> -->
                 <textarea v-model="newContent" id="newContent" name="newContent" rows="15" class="form-control" placeholder="Content"></textarea>                    
             </div>
             <div>

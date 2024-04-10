@@ -4,15 +4,15 @@
       <ApplyNavbar :userName="userName" :userRole="userRole" />
 
       <p></p>
-      <h3><router-link to="/createguideline"><button @click="navigate" role="link" class="btn btn-primary">Create A New Guideline</button></router-link></h3>       
+      <h3><router-link to="/createguideline"><button @click="navigate" role="link" class="btn btn-primary btn-lg">Create A New Guideline</button></router-link></h3>       
       
       <p></p>
       <p v-if="readMessage" class="error-message">{{ readMessage }}</p>
-      <div class="mb-3"> 
+      <div v-if="guidelines.length > 0" class="mb-3"> 
           <table class="table table-striped table-hover">
               <thead>
                   <tr>
-                      <th>Content</th>
+                      <th>Guidelines</th>
                       <th>View / Update</th>
                       <th>Delete</th>
                   </tr>
@@ -20,7 +20,7 @@
               <tbody>
                 <tr v-for="guideline in guidelines" :key="guideline.guidelineId">
                     <!-- Display only the first 50 characters of guideline.content -->
-                    <td>{{ guideline.content.substring(0, 50) + (guideline.content.length > 50 ? '...' : '') }}</td>
+                    <td>{{ guideline.content.substring(0, 130) + (guideline.content.length > 130 ? '...' : '') }}</td>
                     <td><button @click="loadGuideline(guideline)" class="btn btn-success">View / Update</button></td>
                     <td><button @click="deleteGuideline(guideline.guidelineId)" class="btn btn-danger">Delete</button></td>
                 </tr>  
@@ -86,7 +86,13 @@ export default {
     getAllGuidelines() {
       GuidelineService.getAllGuidelines()
         .then(response => {
-        this.guidelines = response.data;
+          if (response.status === 204) {
+            this.clearAllMessage();
+            this.readMessage = "No article found!";
+            this.guidelines = []; // Clear articles array
+          } else {    
+            this.guidelines = response.data;
+          }  
       })
       .catch(error => {
         //console.error("Error fetching guidelines: ", error);
@@ -110,6 +116,7 @@ export default {
         this.clearAllMessage();
         this.deleteMessage = "Guideline deleted successfully.";
         this.getAllGuidelines();
+        this.showUpdateForm = false;
       })
       .catch(error => {
         // Handle error
@@ -137,10 +144,9 @@ export default {
         .then(() => {
         console.log("Guideline updated successfully:");
         this.clearAllMessage();
-        //this.updateMessage = "Guideline updated successfully.";
+        this.updateMessage = "Guideline updated successfully.";
         this.getAllGuidelines();
         this.showUpdateForm = false;
-        window.alert("Guideline updated successfully.")
       })
       .catch(error => {
         console.error("Error updating guideline:", error);
