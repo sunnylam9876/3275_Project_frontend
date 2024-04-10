@@ -4,7 +4,7 @@
       <ApplyNavbar :userName="userName" :userRole="userRole" />
 
       <p></p>
-      <h3><router-link to="/createguideline">Create A New Guideline</router-link></h3>       
+      <h3><router-link to="/createguideline"><button @click="navigate" role="link" class="btn btn-primary">Create A New Guideline</button></router-link></h3>       
       
       <p></p>
       <p v-if="readMessage" class="error-message">{{ readMessage }}</p>
@@ -40,7 +40,6 @@
                   <button type="submit" class="btn btn-primary">Update</button>
               </div>
           </form>    
-          <p v-if="updateMessage" class="error-message">{{ updateMessage }}</p>
       </div>  
   </div>
 </template>
@@ -63,7 +62,9 @@ export default {
 
       // Variable for a new guideline
       newContent: "",
-      uploadMessage: "", // feedback message after creating a new guideline
+      updateMessage: "", // feedback message after creating a new guideline
+      readMessage: "",
+      deleteMessage: "",
       
       // Variable for view / update an existing guideline
       guidelines: [],    // Store fetched guideline from server
@@ -108,7 +109,7 @@ export default {
         console.log("Guideline deleted successfully:");
         this.clearAllMessage();
         this.deleteMessage = "Guideline deleted successfully.";
-        this.getGuidelinesbyUserId(localStorage.getItem("userId"));
+        this.getAllGuidelines();
       })
       .catch(error => {
         // Handle error
@@ -136,8 +137,10 @@ export default {
         .then(() => {
         console.log("Guideline updated successfully:");
         this.clearAllMessage();
-        this.updateMessage = "Guideline updated successfully.";
+        //this.updateMessage = "Guideline updated successfully.";
         this.getAllGuidelines();
+        this.showUpdateForm = false;
+        window.alert("Guideline updated successfully.")
       })
       .catch(error => {
         console.error("Error updating guideline:", error);
@@ -147,7 +150,9 @@ export default {
     },  
 
     clearAllMessage() {
-      this.uploadMessage = "";
+      this.updateMessage = "";
+      this.readMessage = "";
+      this.deleteMessage = "";
     },
 
     toggleNewGuidelineForm() {
@@ -161,5 +166,11 @@ export default {
     this.getAllGuidelines();
   }
 }
-
 </script>
+
+<style scoped>
+  .error-message {
+    color: red;
+  }
+</style>
+
