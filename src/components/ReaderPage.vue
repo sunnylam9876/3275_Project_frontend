@@ -4,9 +4,6 @@
         <ApplyNavbar :userName="userName" :userRole="userRole" />
     </div>
 
-    <p>This is reader's page</p>
-    <p>Pending.....</p>
-    <p></p>
     <h3><router-link to="/article">Browse All Articles</router-link></h3>       
 
 </template>
