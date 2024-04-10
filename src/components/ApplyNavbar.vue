@@ -9,7 +9,8 @@
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <!-- Add Logout link -->
                             <li class="nav-item">
-                                {{ userName }} ({{ userRole }})<router-link class="nav-link" to="/logout">Logout</router-link>
+                                {{ userName }} ({{ userRole }})<router-link class="nav-link" to="/logout">
+                                    <button @click="navigate" role="link" class="btn btn-outline-danger">Logout</button></router-link>
                             </li>
                         </ul>
                     </div>
