@@ -4,7 +4,7 @@
         <ApplyNavbar :userName="userName" :userRole="userRole" />
 
         <p></p>
-        <h3><router-link to="/createarticle">Create A New Article</router-link></h3>       
+        <h3><router-link to="/createarticle"><button @click="navigate" role="link" class="btn btn-primary btn-lg">Create A New Article</button></router-link></h3>       
         
         <!-- <button @click="getAllArticles()" class="btn btn-primary">Reload All Articles</button> -->
         <p></p>
