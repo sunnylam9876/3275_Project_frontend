@@ -4,27 +4,33 @@
         <ApplyNavbar :userName="userName" :userRole="userRole" />
     </div>
 
+    <div class="back-button">
+        <router-link to="/reader" class="btn btn-primary">Back</router-link>
+    </div>
+
     <h1>Browse All Articles</h1>
     <p></p>
     <p v-if="readMessage" class="error-message">{{ readMessage }}</p>
     <div v-if="articles.length > 0" class="mb-3"> 
-        <table class="table table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Content</th>
-                    <th>Read Article</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="article in articles" :key="article.articleId">
-                    <td>{{ article.title }}</td>
-                    <!-- Get the first 20 words of the content -->
-                    <td>{{ getShortContent(article.content) }}</td>
-                    <router-link :to="{ name: 'ViewArticle', params: { id: article.articleId }}" class="btn btn-success">Read Full Article</router-link>
-                </tr>
-            </tbody>
-        </table>    
+        <div class="table-container">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 30%;">Title</th>
+                        <th style="width: 50%;">Content</th>
+                        <th style="width: 20%;">Read Article</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="article in articles" :key="article.articleId">
+                        <td>{{ article.title }}</td>
+                        <!-- Get the first 20 words of the content -->
+                        <td>{{ getShortContent(article.content) }}</td>
+                        <td><router-link :to="{ name: 'ViewArticle', params: { id: article.articleId }}" class="btn btn-success">Read Full Article</router-link></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div v-else>
         <p>No articles available.</p>
@@ -87,7 +93,23 @@ export default {
 </script>
   
 <style scoped>
+
 .error-message {
     color: red;
+}
+
+.back-button {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    max-width: 1900px;
+    width: 100%;
+    padding-right: 20px;
+}
+
+.table-container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1300px;
 }
 </style>

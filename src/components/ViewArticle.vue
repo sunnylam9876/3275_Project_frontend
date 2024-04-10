@@ -10,19 +10,28 @@
 
     <div v-if="article">
         <h1>{{ article.title }}</h1>
-        <div class="article-info">
-            <div class="info-group">
-                <p><strong>User ID:</strong> <span class="info">{{ article.userId }}</span></p>
+        <div class="article-content">    
+            <div class="article-info">
+                <div class="info-group">
+                    <p><strong>User ID:</strong> <span class="info">{{ article.userId }}</span></p>
+                </div>
+                <div class="info-group">
+                    <p><strong>No. of Views:</strong> <span class="info">{{ article.noOfView }}</span></p>
+                </div>
+                <div class="info-group">
+                    <p><strong>No. of Likes:</strong> <span class="info">{{ article.noOfLike }}</span></p>
+                </div>
             </div>
-            <div class="info-group">
-                <p><strong>No. of Views:</strong> <span class="info">{{ article.noOfView }}</span></p>
+        
+            <div class="content-border"> <!-- Add a div for content border -->
+                <p><strong>Content:</strong></p>
+                <p>{{ article.content }}</p>
             </div>
-            <div class="info-group">
-                <p><strong>No. of Likes:</strong> <span class="info">{{ article.noOfLike }}</span></p>
+            <div>
+                <h2>Coments</h2>
+                
             </div>
         </div>
-        <p><strong>Content:</strong></p>
-        <p>{{ article.content }}</p>
     </div>
 
     <div v-else>
@@ -82,8 +91,9 @@ export default {
     margin-top: 20px;
     display: flex;
     justify-content: flex-end;
+    max-width: 1900px;
     width: 100%;
-    padding-right: 150px;
+    padding-right: 20px;
 }
 
 .article-info {
@@ -100,5 +110,15 @@ export default {
     font-size: 18px;
     font-weight: bold;
     margin-left: 10px;
+}
+
+.article-content {
+    max-width: 1300px; 
+    margin: 0 auto;
+}
+
+.content-border {
+    border: 1px solid #ccc; /* Add border around content */
+    padding: 10px; /* Add padding inside the border */
 }
 </style>
