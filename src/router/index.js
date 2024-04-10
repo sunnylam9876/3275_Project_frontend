@@ -72,7 +72,7 @@ const routes = [
         path: '/article/:id',
         name: 'ViewArticle',
         component: ViewArticle
-    }
+    },
 
     {
         path: "/createguideline",        
