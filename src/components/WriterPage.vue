@@ -9,7 +9,9 @@
         <!-- <button @click="getAllArticles()" class="btn btn-primary">Reload All Articles</button> -->
         <p></p>
         <p v-if="readMessage" class="error-message">{{ readMessage }}</p>
-        <div class="mb-3"> 
+        
+        <!-- Conditionally render the table based on whether articles are present or not -->
+        <div v-if="articles.length > 0" class="mb-3"> 
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -22,9 +24,9 @@
                 <tbody>
                     <tr v-for="article in articles" :key="article.articleId">
                         <td>{{ article.title }}</td>
-                        <!-- Display only the first 20 characters of article.content -->
+                        <!-- Display only the first 50 characters of article.content -->
                         <td>{{ article.content.substring(0, 50) + (article.content.length > 50 ? '...' : '') }}</td>
-                        <td><button @click="loadArticle(article)" class="btn btn-success">View Details / Update</button></td>
+                        <td><button @click="loadArticle(article)" class="btn btn-success">View / Update</button></td>
                         <td><button @click="deleteArticle(article.articleId)" class="btn btn-danger">Delete</button></td>
                     </tr>
                 </tbody>
@@ -43,7 +45,7 @@
                 </div>
                 <div class="mb-3">
                     <!-- <label>Content:</label> -->
-                    <textarea v-model="content" id="content" name="content" rows="5" class="form-control" placeholder="Content"></textarea>
+                    <textarea v-model="content" id="content" name="content" rows="15" class="form-control" placeholder="Content"></textarea>
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary">Update</button>
@@ -136,14 +138,19 @@ export default {
     },
 
     getArticlesbyUserId(userId) {
-        ArticleService.getArticlesbyUserId(userId)
-            .then(response => {
+    ArticleService.getArticlesbyUserId(userId)
+        .then(response => {
+            if (response.status === 204) {
+                this.clearAllMessage();
+                this.readMessage = "No article found!";
+                this.articles = []; // Clear articles array
+            } else {
                 this.articles = response.data;
-                //console.log(response);
-            })
-            .catch(error => {
-                this.readMessage = "Error fetching article: " + error;
-            })
+            }
+        })
+        .catch(error => {
+            this.readMessage = "Error fetching article: " + error;
+        });
     },
 
     deleteArticle(articleId) {
@@ -162,6 +169,7 @@ export default {
                     this.clearAllMessage();
                     this.deleteMessage = "Article deleted successfully.";
                     this.getArticlesbyUserId(localStorage.getItem("userId"));
+                    this.hideUpdateForm();
             })
             .catch(error => {
                 // Handle error
@@ -211,7 +219,7 @@ export default {
         this.deleteMessage = "";
     },
 
-    toggleNewArticleForm() {
+    hideUpdateForm() {
         // Hide the update form when creating a new article
         this.showUpdateForm = false;       
         

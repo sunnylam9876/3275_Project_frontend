@@ -9,6 +9,8 @@ import AdminPage from "../components/AdminPage.vue";
 import CreateArticle from "../components/CreateArticle.vue";
 import BrowseAllArticle from "../components/BrowseAllArticle.vue";
 import ViewArticle from '../components/ViewArticle.vue';
+import CreateGuideline from "../components/CreateGuideline.vue";
+
 
 const routes = [
     {
@@ -71,6 +73,12 @@ const routes = [
         name: 'ViewArticle',
         component: ViewArticle
     }
+
+    {
+        path: "/createguideline",        
+        name: "createguideline",
+        component: CreateGuideline
+    },
 
 
 ];
