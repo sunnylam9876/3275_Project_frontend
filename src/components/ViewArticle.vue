@@ -35,7 +35,7 @@
                     <li v-for="comment in comments" :key="comment.id" class="comment">
                         <p><strong>Comment's User ID:</strong> {{ comment.userId }}</p>
                         <p><strong>Comments: </strong>{{ comment.content }}</p>                        
-                        <p><strong>Created at:</strong> {{ comment.createdTime }}</p>
+                        <p><strong>Commented at:</strong> {{ convertToLocalTime(comment.createdTime) }}</p>
                     </li>
                 </ul>
             </div>
@@ -134,6 +134,11 @@ export default {
                     console.error("Error posting comment: ", error);
                 });
             }
+        },
+
+        convertToLocalTime(utcTime) {
+            const localTime = new Date(utcTime).toLocaleString();
+            return localTime;
         }
     },
     
