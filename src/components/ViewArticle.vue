@@ -9,6 +9,7 @@
     </div>
 
     <div v-if="article">
+
         <h1>{{ article.title }}</h1>
         <div class="article-content">    
             <div class="article-info">
@@ -23,15 +24,26 @@
                 </div>
             </div>
         
-            <div class="content-border"> <!-- Add a div for content border -->
+            <div class="content-border">
                 <p><strong>Content:</strong></p>
                 <p>{{ article.content }}</p>
             </div>
-            <div>
-                <h2>Coments</h2>
-                
+
+            <div class="comments-container" v-if="comments && comments.length > 0">
+                <h2>Comments</h2>
+                <ul>
+                    <li v-for="comment in comments" :key="comment.id" class="comment">
+                        <p><strong>User ID:</strong> {{ comment.userId }}</p>
+                        <p><strong>Comments: </strong>{{ comment.content }}</p>                        
+                        <p><strong>Created at:</strong> {{ comment.createdTime }}</p>
+                    </li>
+                </ul>
+            </div>
+            <div v-else>
+                <p>No comments available.</p>
             </div>
         </div>
+
     </div>
 
     <div v-else>
@@ -43,6 +55,7 @@
 <script>
 import ApplyNavbar from '@/components/ApplyNavbar.vue';
 import ArticleService from "../services/ArticleService";
+import CommentServices from "../services/CommentServices";
 
 export default {
     name: 'ViewArticle',
@@ -57,6 +70,7 @@ export default {
             userName: "",
             userRole: "",
             article: null, // Store article data
+            comments: []
         };
     },
 
@@ -68,23 +82,36 @@ export default {
         }, 
        
         fetchArticleData() {
-            const articleId = this.$route.params.id; // Get article ID from route params
+            const articleId = this.$route.params.id;
             ArticleService.getArticleById(articleId)
             .then(response => {
-                this.article = response.data; // Store article data
+                this.article = response.data;
+                // fetch comments after fetching article.
+                this.fetchCommentsData(articleId); // Pass articleId to fetchCommentsData
             })
             .catch(error => {
                 console.error("Error fetching article data: ", error);
             });
+        },
+
+        fetchCommentsData(articleId) { 
+            CommentServices.getCommentsByArticleId(articleId)
+            .then(response => {
+                this.comments = response.data;
+            })
+            .catch(error => {
+                console.error("Error fetching comments data: ", error);
+            });
         }
     },
-  
+    
     mounted() {
         this.readLocalStorageItem();
         this.fetchArticleData();
     }
 }
 </script>
+
 
 <style scoped>
 .back-button {
@@ -118,7 +145,18 @@ export default {
 }
 
 .content-border {
-    border: 1px solid #ccc; /* Add border around content */
-    padding: 10px; /* Add padding inside the border */
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.comments-container {
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.comment {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 15px;
 }
 </style>
