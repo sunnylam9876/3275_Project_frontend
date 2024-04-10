@@ -14,7 +14,7 @@
         <div class="article-content">    
             <div class="article-info">
                 <div class="info-group">
-                    <p><strong>Author ID:</strong> <span class="info">{{ article.userId }}</span></p>
+                    <p><strong>Author's user ID:</strong> <span class="info">{{ article.userId }}</span></p>
                 </div>
                 <div class="info-group">
                     <p><strong>No. of Views:</strong> <span class="info">{{ article.noOfView }}</span></p>
@@ -33,7 +33,7 @@
                 <h2>Comments</h2>
                 <ul>
                     <li v-for="comment in comments" :key="comment.id" class="comment">
-                        <p><strong>User Name:</strong> {{ comment.userId }}</p>
+                        <p><strong>Comment's User ID:</strong> {{ comment.userId }}</p>
                         <p><strong>Comments: </strong>{{ comment.content }}</p>                        
                         <p><strong>Created at:</strong> {{ comment.createdTime }}</p>
                     </li>
