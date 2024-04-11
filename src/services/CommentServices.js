@@ -9,6 +9,8 @@ class CommentServices {
     createComment(commentData) {
         return http.post('/comments', commentData);
     }
+
+    
 }
 
 export default new CommentServices();

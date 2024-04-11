@@ -4,7 +4,7 @@
         <ApplyNavbar :userName="userName" :userRole="userRole" />
     </div>
 
-    <h3><router-link to="/article">Browse All Articles</router-link></h3>       
+    <h3><router-link to="/article"><button @click="navigate" role="link" class="btn btn-primary btn-lg">Browse All Articles</button></router-link></h3>       
 
 </template>
 

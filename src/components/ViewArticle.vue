@@ -4,45 +4,53 @@
         <ApplyNavbar :userName="userName" :userRole="userRole" />
     </div>
 
+    <!--Back Button-->
     <div class="back-button">
         <router-link to="/article" class="btn btn-primary">Back</router-link>
     </div>
 
     <div v-if="article">
-
+        
+        <!--Article's Details-->
         <h1>{{ article.title }}</h1>
+        <!--To display the three set of data by setting article-info to flex in style-->
         <div class="article-content">    
             <div class="article-info">
                 <div class="info-group">
                     <p><strong>Author's user ID:</strong> <span class="info">{{ article.userId }}</span></p>
                 </div>
                 <div class="info-group">
-                    <p><strong>No. of Views:</strong> <span class="info">{{ article.noOfView }}</span></p>
+                    <p><strong>No. of Views:</strong> <span class="info" style="color: violet">{{ article.noOfView }}</span></p>
                 </div>
                 <div class="info-group">
-                    <p><strong>No. of Likes:</strong> <span class="info">{{ article.noOfLike }}</span></p>
+                    <p><strong>No. of Likes:</strong> <span class="info" style="color: lightcoral">{{ article.noOfLike }}</span></p>
                 </div>
             </div>
         
+            <!--Article's Content-->
             <div class="content-border">
                 <p><strong>Content:</strong></p>
-                <p>{{ article.content }}</p>
+                <p><span style="color: navy">{{ article.content }}</span></p>
             </div>
 
+            <!--Comment's Part-->
             <div class="comments-container" v-if="comments && comments.length > 0">
                 <h2>Comments</h2>
                 <ul>
+                    <!--Loop the comments-->
                     <li v-for="comment in comments" :key="comment.id" class="comment">
                         <p><strong>Comment's User ID:</strong> {{ comment.userId }}</p>
-                        <p><strong>Comments: </strong>{{ comment.content }}</p>                        
+                        <p><strong>Comments: </strong><span style="color: blue">{{ comment.content }}</span></p>                        
                         <p><strong>Commented at:</strong> {{ convertToLocalTime(comment.createdTime) }}</p>
                     </li>
                 </ul>
             </div>
+            <!--Show no comment for zero comment article-->
             <div v-else>
-                <p>No comments available.</p>
+                <p><span style="color: red">No comment available.</span></p>
             </div>
 
+            <!--Levaing Comment Part-->
             <div>
                 <h2>Leave a Comment</h2>
                 <form @submit.prevent="submitComment">
@@ -55,8 +63,9 @@
 
     </div>
 
+    <!--show no content if there is no such article-->
     <div v-else>
-        <p>No Content</p>
+        <p><span style="color: red">No Content</span></p>
     </div>
     
 </template>
@@ -181,8 +190,9 @@ export default {
 }
 
 .content-border {
-    border: 1px solid #ccc;
+    border: 1px solid black;
     padding: 10px;
+    background-color: lightcyan;
 }
 
 .comments-container {
@@ -191,9 +201,10 @@ export default {
 }
 
 .comment {
-    border: 1px solid #ccc;
+    border: 1px solid lightseagreen;
     padding: 10px;
     margin-bottom: 15px;
+    background-color: lightgray;
 }
 
 textarea {

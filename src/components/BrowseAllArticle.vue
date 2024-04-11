@@ -4,13 +4,17 @@
         <ApplyNavbar :userName="userName" :userRole="userRole" />
     </div>
 
+    <!--Back Button-->
     <div class="back-button">
         <router-link to="/reader" class="btn btn-primary">Back</router-link>
     </div>
-
+    
     <h1>Browse All Articles</h1>
+
     <p></p>
+
     <p v-if="readMessage" class="error-message">{{ readMessage }}</p>
+
     <div v-if="articles.length > 0" class="mb-3"> 
         <div class="table-container">
             <table class="table table-striped table-hover">
@@ -22,18 +26,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!--Loop all the articles-->
                     <tr v-for="article in articles" :key="article.articleId">
                         <td>{{ article.title }}</td>
                         <!-- Get the first 20 words of the content -->
                         <td>{{ getShortContent(article.content) }}</td>
+                        <!--Link to the article-->
                         <td><router-link :to="{ name: 'ViewArticle', params: { id: article.articleId }}" class="btn btn-success">Read Full Article</router-link></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+    <!--If no articles, deisplay this paragraph.-->
     <div v-else>
-        <p>No articles available.</p>
+        <p><span style="color: red">No articles available.</span></p>
     </div>
 </template>
   
@@ -49,10 +56,12 @@ export default {
   
     data() {
         return {
+
             // Variable for user info from localStorage
             userId: 0,
             userName: "",
             userRole: "",
+
             // Variable for view / update an existing article
             articles: [],    // Store fetched articles from server
             title: "",
