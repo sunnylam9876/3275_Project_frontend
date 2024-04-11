@@ -22,7 +22,7 @@
               </thead>
               <tbody>
                 <tr v-for="guideline in guidelines" :key="guideline.guidelineId">
-                    <!-- Display only the first 50 characters of guideline.content -->
+                    <!-- Display only the first 130 characters of guideline.content -->
                     <td>{{ guideline.content.substring(0, 130) + (guideline.content.length > 130 ? '...' : '') }}</td>
                     <td><button @click="loadGuideline(guideline)" class="btn btn-success">View / Update</button></td>
                     <td><button @click="deleteGuideline(guideline.guidelineId)" class="btn btn-danger">Delete</button></td>
