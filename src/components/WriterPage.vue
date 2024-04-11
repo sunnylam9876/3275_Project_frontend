@@ -164,7 +164,7 @@ export default {
             this.updateMessage = "Title and content cannot be empty.";
             return; // Stop further execution
         }
-        ArticleService.updateArticle(this.title, this.content, 1, articleId)
+        ArticleService.updateArticle(this.title, this.content, this.userId, articleId)
             .then(() => {
                 this.clearAllMessage();
                 this.updateMessage = "Article updated successfully.";
