@@ -142,6 +142,8 @@ export default {
                 this.article = response.data;
                 // fetch comments after fetching article.
                 this.fetchCommentsData(articleId); // Pass articleId to fetchCommentsData
+                // update article view count
+                this.updateArticleCount(articleId);
             })
             .catch(error => {
                 console.error("Error fetching article data: ", error);
@@ -158,6 +160,16 @@ export default {
             .catch(error => {
                 console.error("Error fetching comments data: ", error);
             });
+        },
+
+        updateArticleCount(articleId) {
+            ArticleService.updateArticleCount(articleId)
+                .then(response => {
+                    console.log("Article count updated successfully", response.data);
+                })
+                .catch(error => {
+                    console.error("Error updating article count: ", error);
+                });
         },
 
         submitComment() {
@@ -216,6 +228,7 @@ export default {
             }
         },
 
+        // flag or unflag the comment
         flagComment(comment) {
             // switch the flag between 0 and 1
             const newFlag = comment.flag === 0 ? 1 : 0; 
