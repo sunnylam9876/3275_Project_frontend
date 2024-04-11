@@ -21,6 +21,10 @@ class CommentServices {
         return http.delete(`/comments/${commentId}`);
     }
 
+    flagComment(commentId, flag) {
+        return http.put(`/comments/${commentId}/flag?flag=${flag}`);
+    }
+
 }
 
 export default new CommentServices();

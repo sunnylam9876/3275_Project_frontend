@@ -38,7 +38,10 @@
                 <h2>Comments</h2>
                 <ul>
                     <!--Loop the comments-->
-                    <li v-for="comment in comments" :key="comment.id" class="comment">
+                    <li v-for="comment in comments" :key="comment.id" class="comment" :class="{ 'flagged-comment': comment.flag }">
+                        <div v-if="comment.flag">
+                            <h3 style="font-weight: bold; color: red">FLAGGED!</h3>
+                        </div>
 
                         <p><strong>Comment's User ID:</strong> {{ comment.userId }}</p>
 
@@ -57,9 +60,13 @@
                         <div v-if="userRole === 'admin' && comment.userId == userId">
                             <button v-if="!comment.isEditing" @click="toggleEdit(comment)">Edit</button>
                             <button v-else @click="saveComment(comment)">Save</button>
+                            <button v-if="!comment.flag" @click="flagComment(comment)">Flag</button>
+                            <button v-else @click="flagComment(comment)">Unflag</button>
                             <button @click="deleteComment(comment.id)">Delete</button>
                         </div>                        
                         <div v-else-if="userRole === 'admin'">
+                            <button v-if="!comment.flag" @click="flagComment(comment)">Flag</button>
+                            <button v-else @click="flagComment(comment)">Unflag</button>
                             <button @click="deleteComment(comment.id)">Delete</button>
                         </div>
 
@@ -209,6 +216,21 @@ export default {
             }
         },
 
+        flagComment(comment) {
+            // switch the flag between 0 and 1
+            const newFlag = comment.flag === 0 ? 1 : 0; 
+            CommentServices.flagComment(comment.id, newFlag)
+                .then(response => {
+                    // Update the comment's flag status
+                    comment.flag = response.data.flag;
+                    console.log("Comment flagged/unflagged successfully");
+                })
+                .catch(error => {
+                    console.error("Error flagging/unflagging comment: ", error);
+                });
+        },
+
+
         deleteComment(commentId) {
             if (confirm("Are you sure you want to delete this comment?")) {
                 CommentServices.deleteComment(commentId)
@@ -288,4 +310,9 @@ textarea {
 .btn-primary {
     margin-top: 10px;
 }
+
+.flagged-comment {
+    background-color: pink;
+}
+
 </style>
