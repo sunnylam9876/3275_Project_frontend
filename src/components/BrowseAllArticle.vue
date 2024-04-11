@@ -5,8 +5,14 @@
     </div>
 
     <!--Back Button-->
-    <div class="back-button">
+    <div v-if="userRole == 'reader'" class="back-button">
         <router-link to="/reader" class="btn btn-primary">Back</router-link>
+    </div>
+    <div v-else-if="userRole == 'writer'" class="back-button">
+        <router-link to="/writer" class="btn btn-primary">Back</router-link>
+    </div>
+    <div v-else-if="userRole == 'admin'" class="back-button">
+        <router-link to="/admin" class="btn btn-primary">Back</router-link>
     </div>
     
     <h1>Browse All Articles</h1>
