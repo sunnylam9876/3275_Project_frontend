@@ -53,12 +53,23 @@
 
                         <p><strong>Commented at:</strong> {{ convertToLocalTime(comment.createdTime) }}</p>
 
+                        <!--Admin can edit (only if he is the comment owner) or delete the comment-->
+                        <div v-if="userRole === 'admin' && comment.userId == userId">
+                            <button v-if="!comment.isEditing" @click="toggleEdit(comment)">Edit</button>
+                            <button v-else @click="saveComment(comment)">Save</button>
+                            <button @click="deleteComment(comment.id)">Delete</button>
+                        </div>                        
+                        <div v-else-if="userRole === 'admin'">
+                            <button @click="deleteComment(comment.id)">Delete</button>
+                        </div>
+
                         <!--Comment owner can edit or delete the comment-->
-                        <div v-if="comment.userId == userId">
+                        <div v-else-if="comment.userId == userId">
                             <button v-if="!comment.isEditing" @click="toggleEdit(comment)">Edit</button>
                             <button v-else @click="saveComment(comment)">Save</button>
                             <button @click="deleteComment(comment.id)">Delete</button>
                         </div>
+                        
                     </li>
                 </ul>
             </div>

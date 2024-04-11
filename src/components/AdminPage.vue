@@ -4,6 +4,9 @@
       <ApplyNavbar :userName="userName" :userRole="userRole" />
 
       <p></p>
+      <h3><router-link to="/article"><button @click="navigate" role="link" class="btn btn-primary btn-lg">Browse All Articles</button></router-link></h3>      
+
+      <p></p>
       <h3><router-link to="/createguideline"><button @click="navigate" role="link" class="btn btn-primary btn-lg">Create A New Guideline</button></router-link></h3>       
       
       <p></p>
