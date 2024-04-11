@@ -30,7 +30,7 @@
             <!--Article's Content-->
             <div class="content-border">
                 <p><strong>Content:</strong></p>
-                <p><span style="color: navy">{{ article.content }}</span></p>
+                <p style="white-space: pre-line; text-align: left;"><span style="color: navy">{{ article.content }}</span></p>
             </div>
 
             <!--Comment's Part-->
@@ -39,9 +39,26 @@
                 <ul>
                     <!--Loop the comments-->
                     <li v-for="comment in comments" :key="comment.id" class="comment">
+
                         <p><strong>Comment's User ID:</strong> {{ comment.userId }}</p>
-                        <p><strong>Comments: </strong><span style="color: blue">{{ comment.content }}</span></p>                        
+
+                        <!--switch between editing and display mode-->
+                        <div v-if="!comment.isEditing">
+                            <p><strong>Comments: </strong></p>
+                            <p style="white-space: pre-line;"><span style="color: blue">{{ comment.content }}</span></p>
+                        </div>
+                        <div v-else>
+                            <textarea v-model="comment.editContent" rows="4" cols="50"></textarea>
+                        </div>
+
                         <p><strong>Commented at:</strong> {{ convertToLocalTime(comment.createdTime) }}</p>
+
+                        <!--Comment owner can edit or delete the comment-->
+                        <div v-if="comment.userId == userId">
+                            <button v-if="!comment.isEditing" @click="toggleEdit(comment)">Edit</button>
+                            <button v-else @click="saveComment(comment)">Save</button>
+                            <button @click="deleteComment(comment.id)">Delete</button>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -116,7 +133,9 @@ export default {
         fetchCommentsData(articleId) { 
             CommentServices.getCommentsByArticleId(articleId)
             .then(response => {
-                this.comments = response.data;
+                this.comments = response.data.map(comment => {
+                    return { ...comment, isEditing: false, editContent: comment.content };
+                });
             })
             .catch(error => {
                 console.error("Error fetching comments data: ", error);
@@ -145,9 +164,52 @@ export default {
             }
         },
 
+        //convert the Date stored in database into local time
         convertToLocalTime(utcTime) {
             const localTime = new Date(utcTime).toLocaleString();
             return localTime;
+        },
+
+        toggleEdit(comment) {
+            // change to edit mode
+            comment.isEditing = !comment.isEditing;
+            // reflect the editContent to comment's current content
+            comment.editContent = comment.content;
+        },
+
+        saveComment(comment) {
+            // chek the comment modifed or not
+            if (comment.content.trim() !== comment.editContent.trim()) {
+                // if the comment modified, update the content
+                comment.content = comment.editContent;
+                // and switch to display mode
+                comment.isEditing = false;
+
+                CommentServices.updateComment(comment.id, comment.content)
+                    .then(response => {
+                        console.log("Comment updated successfully", response.data);
+                    })
+                    .catch(error => {
+                        console.error("Error updating comment: ", error);
+                    });
+            } else {
+                // when content is not modified, just switch to display mode
+                comment.isEditing = false;
+            }
+        },
+
+        deleteComment(commentId) {
+            if (confirm("Are you sure you want to delete this comment?")) {
+                CommentServices.deleteComment(commentId)
+                .then(() => {
+                    // remove the deleted comment and reflected in the comment part
+                    this.comments = this.comments.filter(comment => comment.id !== commentId);
+                    console.log("Comment deleted successfully");
+                })
+                .catch(error => {
+                    console.error("Error deleting comment: ", error);
+                });
+            }
         }
     },
     
