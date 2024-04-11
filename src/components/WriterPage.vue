@@ -4,9 +4,8 @@
         <ApplyNavbar :userName="userName" :userRole="userRole" />
 
         <p></p>
-        <h3><router-link to="/createarticle"><button @click="navigate" role="link" class="btn btn-primary btn-lg">Create A New Article</button></router-link></h3>       
+        <h3><router-link to="/createarticle"><button @click="navigate" role="link" class="btn btn-primary btn-lg">Create A New Article</button></router-link></h3>              
         
-        <!-- <button @click="getAllArticles()" class="btn btn-primary">Reload All Articles</button> -->
         <p></p>
         <p v-if="readMessage" class="error-message">{{ readMessage }}</p>
         
@@ -40,11 +39,9 @@
             <h3>View / Update An Article</h3>
             <form @submit.prevent="updateArticle(articleId)">
                 <div class="mb-3">
-                    <!-- <label>Title:</label> -->
                     <input type="text" v-model="title" id="title" name="title" class="form-control" placeholder="Title">
                 </div>
                 <div class="mb-3">
-                    <!-- <label>Content:</label> -->
                     <textarea v-model="content" id="content" name="content" rows="15" class="form-control" placeholder="Content"></textarea>
                 </div>
                 <div>
@@ -97,34 +94,7 @@ export default {
         this.userId = localStorage.getItem("userId");
         this.userName = localStorage.getItem("userName");
         this.userRole = localStorage.getItem("role");
-        //console.log(this.userName);
-        //console.log(this.useRole);
-    },
-
-    uploadArticle() {
-        // Check if title and content are empty
-        if (!this.newTitle.trim() || !this.newContent.trim()) {
-            this.uploadMessage = "Title and content cannot be empty.";
-            return; // Stop further execution
-        }
-
-        // Call uploadArticle function from WriterService.js
-        // Assume userID is 1
-        ArticleService.uploadArticle(this.newTitle, this.newContent, 1)
-            .then(() => {
-                // Handle success response
-                //console.log("Article created successfully:", response.data);
-                this.clearAllMessage();
-                this.uploadMessage = "Article created successfully.";
-                this.getAllArticles();
-            })
-            .catch(error => {
-                // Handle error
-                //console.error("Error creating article: ", error);
-                this.clearAllMessage();
-                this.uploadMessage = "Error creating article: " + error;
-            })
-    },
+    },    
 
     getAllArticles() {
         ArticleService.getAllArticles()
@@ -132,7 +102,6 @@ export default {
                 this.articles = response.data;
             })
             .catch(error => {
-                //console.error("Error fetching articles: ", error);
                 this.readMessage = "Error fetching article: " + error;
             });
     },
@@ -173,7 +142,6 @@ export default {
             })
             .catch(error => {
                 // Handle error
-                //console.error("Error deleting article:", error);
                 this.clearAllMessage();
                 this.deleteMessage = "Error deleting article: " + error;
             });
@@ -181,8 +149,7 @@ export default {
 
     loadArticle(article) {
         
-        this.showUpdateForm = true; // Show the update form
-        
+        this.showUpdateForm = true; // Show the update form        
 
         // Set the title and article content for updating
         this.title = article.title;
@@ -199,13 +166,11 @@ export default {
         }
         ArticleService.updateArticle(this.title, this.content, 1, articleId)
             .then(() => {
-                //console.log("Article updated successfully:", response.data);
                 this.clearAllMessage();
                 this.updateMessage = "Article updated successfully.";
                 this.getArticlesbyUserId(this.userId);
             })
             .catch(error => {
-                //console.error("Error updating article:", error);
                 this.clearAllMessage();
                 this.updateMessage = "Error updating article: " + error;
             });
@@ -227,8 +192,6 @@ export default {
   },  
 
   mounted() {
-    // Call getAllArticles method when the component is mounted to fetch articles
-    //this.getAllArticles();
     this.getArticlesbyUserId(localStorage.getItem("userId"));
     this.readLocalStorageItem();
   }

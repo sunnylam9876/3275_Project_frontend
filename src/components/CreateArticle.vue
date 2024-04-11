@@ -66,22 +66,16 @@ export default {
         }
 
         // Call uploadArticle function from WriterService.js
-        // Assume userID is 1
         ArticleService.uploadArticle(this.newTitle, this.newContent, this.userId)
             .then(() => {
                 // Handle success response
-                //console.log("Article created successfully:", response.data);
                 this.clearAllMessage();
-                //this.uploadMessage = "Article created successfully.";
                 window.alert("Article created successfully.");
-
-                // Redirect if article is created successfully
                 this.$router.push("/writer");
                 
             })
             .catch(error => {
                 // Handle error
-                //console.error("Error creating article: ", error);
                 this.clearAllMessage();
                 this.uploadMessage = "Error creating article: " + error;
             })
