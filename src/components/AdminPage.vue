@@ -88,7 +88,7 @@ export default {
         .then(response => {
           if (response.status === 204) {
             this.clearAllMessage();
-            this.readMessage = "No article found!";
+            this.readMessage = "No guideline found!";
             this.guidelines = []; // Clear articles array
           } else {    
             this.guidelines = response.data;
