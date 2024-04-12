@@ -4,10 +4,7 @@
         <ApplyNavbar :userName="userName" :userRole="userRole" />
     </div>
 
-    <!--Back Button-->
-    <div class="back-button">
-        <router-link to="/reader" class="btn btn-primary">Back</router-link>
-    </div>
+
     
     <h1>Browse All Articles</h1>
 
@@ -15,7 +12,7 @@
 
     <p v-if="readMessage" class="error-message">{{ readMessage }}</p>
 
-    <div v-if="articles.length > 0" class="mb-3"> 
+    <div v-if="articles.length > 0" class="mb-3"> <!-- mb-3 is for adding margin-bottom to the element-->
         <div class="table-container">
             <table class="table table-striped table-hover">
                 <thead>
@@ -41,6 +38,17 @@
     <!--If no articles, deisplay this paragraph.-->
     <div v-else>
         <p><span style="color: red">No articles available.</span></p>
+    </div>
+
+        <!--Back Button-->
+    <div v-if="userRole == 'reader'" class="back-button">
+        <router-link to="/reader" class="btn btn-primary">Back</router-link>
+    </div>
+    <div v-else-if="userRole == 'writer'" class="back-button">
+        <router-link to="/writer" class="btn btn-primary">Back</router-link>
+    </div>
+    <div v-else-if="userRole == 'admin'" class="back-button">
+        <router-link to="/admin" class="btn btn-primary">Back</router-link>
     </div>
 </template>
   
@@ -105,15 +113,6 @@ export default {
 
 .error-message {
     color: red;
-}
-
-.back-button {
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-end;
-    max-width: 1900px;
-    width: 100%;
-    padding-right: 20px;
 }
 
 .table-container {
