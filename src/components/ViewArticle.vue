@@ -4,11 +4,6 @@
         <ApplyNavbar :userName="userName" :userRole="userRole" />
     </div>
 
-    <!--Back Button-->
-    <div class="back-button">
-        <router-link to="/article" class="btn btn-primary">Back</router-link>
-    </div>
-
     <div v-if="article">
         
         <!--Article's Details-->
@@ -38,7 +33,7 @@
                 <h2>Comments</h2>
                 <ul>
                     <!--Loop the comments-->
-                    <li v-for="comment in comments" :key="comment.id" class="comment" :class="{ 'flagged-comment': comment.flag }">
+                    <ol v-for="comment in comments" :key="comment.id" class="comment" :class="{ 'flagged-comment': comment.flag }">
                         <div v-if="comment.flag">
                             <h3 style="font-weight: bold; color: red">FLAGGED!</h3>
                         </div>
@@ -77,7 +72,7 @@
                             <button @click="deleteComment(comment.id)">Delete</button>
                         </div>
                         
-                    </li>
+                    </ol>
                 </ul>
             </div>
             <!--Show no comment for zero comment article-->
@@ -88,7 +83,7 @@
             <!--Levaing Comment Part-->
             <div>
                 <h2>Leave a Comment</h2>
-                <form @submit.prevent="submitComment">
+                <form @submit.prevent="submitComment"> <!--prevents the default behavior (reloading), and custom the submitComment-->
                     <textarea v-model="newCommentContent" rows="4" cols="50" placeholder="Enter your comment here please."></textarea>
                     <button type="submit" class="btn btn-primary">Post Comment</button>
                 </form>
@@ -101,6 +96,11 @@
     <!--show no content if there is no such article-->
     <div v-else>
         <p><span style="color: red">No Content</span></p>
+    </div>
+
+        <!--Back Button-->
+    <div class="back-button">
+        <router-link to="/article" class="btn btn-primary">Back</router-link>
     </div>
     
 </template>
@@ -267,14 +267,6 @@ export default {
 </script>
 
 <style scoped>
-.back-button {
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-end;
-    max-width: 1900px;
-    width: 100%;
-    padding-right: 20px;
-}
 
 .article-info {
     display: flex;
