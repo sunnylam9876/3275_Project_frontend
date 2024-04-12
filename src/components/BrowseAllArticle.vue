@@ -3,8 +3,6 @@
         <!-- Insert a Navbar on the top of webpage -->
         <ApplyNavbar :userName="userName" :userRole="userRole" />
     </div>
-
-
     
     <h1>Browse All Articles</h1>
 
